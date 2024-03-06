@@ -1,0 +1,29 @@
+PREFIX :=
+
+COREMARK_CMD := ../coremark.exe 0 0 0 ${ITERATIONS}
+
+gcc.perf:copy_gcc
+	perf stat -e ${EVENTS} ${COREMARK_CMD} &> $@
+
+llvm.perf:copy_llvm
+	perf stat -e ${EVENTS} ${COREMARK_CMD} &> $@
+
+gcc.record:copy_gcc
+	perf record --call-graph dwarf ${COREMARK_CMD} && mv perf.data $@
+
+llvm.record:copy_llvm
+	perf record --call-graph dwarf ${COREMARK_CMD} && mv perf.data $@
+
+gcc.report:
+	perf report --call-graph -i gcc.record
+
+llvm.report:
+	perf report --call-graph -i llvm.record
+
+hotspot:gcc.record
+	hotspot gcc.record
+
+copy_gcc:gcc
+
+copy_llvm:llvm
+

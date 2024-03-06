@@ -1,0 +1,26 @@
+PREFIX := /opt/riscv-gnu-toolchain/bin/riscv64-unknown-linux-gnu-
+
+COREMARK_CMD := /tmp/coremark.exe 0 0 0 ${ITERATIONS}
+
+gcc.perf:copy_gcc
+	ssh lpi4a perf stat -e ${EVENTS} ${COREMARK_CMD} &> $@
+
+llvm.perf:copy_llvm
+	ssh lpi4a perf stat -e ${EVENTS} ${COREMARK_CMD} &> $@
+
+gcc.record:copy_gcc
+	ssh lpi4a "perf record --call-graph fp -o /tmp/$@ ${COREMARK_CMD}"
+
+llvm.record:copy_llvm
+	ssh lpi4a "perf record --call-graph fp -o /tmp/$@ ${COREMARK_CMD}"
+
+copy_gcc:gcc
+	scp ../coremark.exe lpi4a:/tmp/
+
+copy_llvm:llvm
+	scp ../coremark.exe lpi4a:/tmp/
+
+copy_gcc:gcc
+
+copy_llvm:llvm
+
