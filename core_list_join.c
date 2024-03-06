@@ -97,11 +97,11 @@ calc_func(ee_s16 *pdata, core_results *res)
                 if (res->crcstate == 0)
                     res->crcstate = retval;
                 break;
-            case 1:
-                retval = core_bench_matrix(&(res->mat), dtype, res->crc);
-                if (res->crcmatrix == 0)
-                    res->crcmatrix = retval;
-                break;
+            /* case 1: */
+            /*     retval = core_bench_matrix(&(res->mat), dtype, res->crc); */
+            /*     if (res->crcmatrix == 0) */
+            /*         res->crcmatrix = retval; */
+            /*     break; */
             default:
                 retval = data;
                 break;
@@ -173,8 +173,8 @@ core_bench_list(core_results *res, ee_s16 finder_idx)
     for (i = 0; i < find_num; i++)
     {
         info.data16 = (i & 0xff);
-        this_find   = core_list_find(list, &info);
-        list        = core_list_reverse(list);
+        /* this_find   = core_list_find(list, &info); */
+        /* list        = core_list_reverse(list); */
         if (this_find == NULL)
         {
             missed++;
@@ -207,14 +207,14 @@ core_bench_list(core_results *res, ee_s16 finder_idx)
     remover = core_list_remove(list->next);
     /* CRC data content of list from location of index N forward, and then undo
      * remove */
-    finder = core_list_find(list, &info);
-    if (!finder)
-        finder = list->next;
-    while (finder)
-    {
-        retval = crc16(list->info->data16, retval);
-        finder = finder->next;
-    }
+    /* finder = core_list_find(list, &info); */
+    /* if (!finder) */
+    /*     finder = list->next; */
+    /* while (finder) */
+    /* { */
+    /*     retval = crc16(list->info->data16, retval); */
+    /*     finder = finder->next; */
+    /* } */
 #if CORE_DEBUG
     ee_printf("List sort 1: %04x\n", retval);
 #endif

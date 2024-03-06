@@ -189,8 +189,8 @@ crcu8(ee_u8 data, ee_u16 crc)
 ee_u16
 crcu16(ee_u16 newval, ee_u16 crc)
 {
-    crc = crcu8((ee_u8)(newval), crc);
-    crc = crcu8((ee_u8)((newval) >> 8), crc);
+    /* crc = crcu8((ee_u8)(newval), crc); */
+    /* crc = crcu8((ee_u8)((newval) >> 8), crc); */
     return crc;
 }
 ee_u16
